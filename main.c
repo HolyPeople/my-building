@@ -108,11 +108,11 @@ void asign_room(Floor* floor_p) {
 		printf("%3d호 정보 입력\n", i + 101);
 		for (j = 0; j < person; j++) {
 			printf("%d번 거주자의 이름 : ", j+ 1);
-			scanf_s("%s", floor_p[i][j]->name, sizeof(floor_p[i][j]->name));
+			scanf_s("%s", (*(*floor_p + i) + j)->name, sizeof((*(*floor_p + i) + j)->name));
 			printf("%d번 거주자의 나이 : ", j + 1);
-			scanf_s("%d", &(floor_p[i][j]->age));
+			scanf_s("%d", &((*(*floor_p + i) + j)->age));
 			printf("%d번 거주자의 전화번호 : ", j + 1);
-			scanf_s("%s", floor_p[i][j]->phone_number, sizeof(floor_p[i][j]->phone_number));
+			scanf_s("%s", (*(*floor_p + i) + j)->phone_number, sizeof((*(*floor_p + i) + j)->phone_number));
 		}
 		
 	}
