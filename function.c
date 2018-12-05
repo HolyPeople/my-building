@@ -111,6 +111,7 @@ void print_room(Building building) {
 	if (!building) return;
 	if (!(*building)) return;
 	if (!(**building)) return;
+	if ((***building).name[0] == 0) return;
 
 	floor = _msize(building) / sizeof(Floor);
 	room = _msize(*building) / sizeof(Room);
