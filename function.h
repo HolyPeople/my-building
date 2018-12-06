@@ -12,12 +12,14 @@ typedef struct _person {
 	char phone_number[20];
 }Person;
 
-int show_menu();
-void init_room(Building*); //initialize Room and dynamic alloc Person array
-void asign_room(Building*); //asign Person data to Room
-void delete_room(Room); //retrun Person array
-void print_room(Building); //print building_memory
-void make_floor(Building*); // make floor and dynamic alloc Person 2D array
-void delete_floor(Floor); //return floor_memory
-void init_building(Building*); //make building and dynamic alloc Person 3D array
-void delete_building(Building); ////return building_memory
+extern int show_menu();
+extern void init_room(Building*); //initialize Room and dynamic alloc Person array
+extern void asign_room(Building*); //asign Person data to Room
+extern void delete_room(Room); //retrun Person array
+extern void print_room(Building); //print building_memory
+extern void make_floor(Building*); // make floor and dynamic alloc Person 2D array
+extern void delete_floor(Floor); //return floor_memory
+extern void init_building(Building*); //make building and dynamic alloc Person 3D array
+extern void delete_building(Building); ////return building_memory
+extern void remodeling_building(Building*);
+void print_building(Building);

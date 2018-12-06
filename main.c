@@ -20,6 +20,7 @@ int main(void) {
 		}
 		system("pause");
 		system("cls");
+		print_building(my_building);
 	}
 	
 	delete_building(my_building);

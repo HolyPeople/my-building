@@ -1,27 +1,13 @@
 #include "function.h"
 
+//printf_menu
 int show_menu() {
 
-	char ch;
-
+	gotoxy(0, 0);
 	printf("0. 종료\n1. 방 만들기 2.방에 입주 3. 방 정보 출력\n");
 	printf("4. 층 만들기\n");
 	printf("5. 건물 만들기\n");
-	printf("입력 : ");
-
-	scanf_s(" %c", &ch, sizeof(ch));
-	while (getchar() != '\n');
-
-	if ('0' <= ch && ch <= '5') {
-		return ch - '0';
-	}
-
-	printf("잘못된 입력입니다. 다시 입력해 주세요\n");
-	printf("pause");
-	system("cls");
-
-	return show_menu();
-
+	return get_only_n2m_number_1(0, 5);
 }
 
 //initialization Room and dynamic alloc Person array
@@ -132,7 +118,7 @@ void print_room(Building building) {
 
 }
 
-// make Room and dynamic alloc Person 2D array
+//make Room and dynamic alloc Person 2D array
 void make_floor(Building* building_p) {
 	int size;
 	int i, j;
@@ -177,6 +163,7 @@ void delete_floor(Floor floor) {
 	free(floor);
 }
 
+//initialization Room and dynamic alloc Person 3D array
 void init_building(Building * building_p) {
 
 	int size;
@@ -202,6 +189,7 @@ void init_building(Building * building_p) {
 
 }
 
+//return building memory
 void delete_building(Building building) {
 
 	int i, floor;
@@ -214,4 +202,41 @@ void delete_building(Building building) {
 		delete_floor(building[i]);
 	}
 	free(building);
+}
+
+void print_building(Building building) {
+	int room, floor;
+	int i, j;
+	if (!building) return;
+
+	floor = _msize(building) / sizeof(Floor);
+	for (i = 0; i < floor; i++) {
+		room = 0;
+		gotoxy(70, 7 - i);
+		printf("[%d 층] ", i+1);
+		
+		if (building[i]) room = _msize(building[i]) / sizeof(Room);
+		for (j = 0; j < room; j++) {
+			printf("[%d0%d호] ", i+1, j+1);
+		}
+	}
+	
+}
+
+int get_only_n2m_number_1(int n, int m) {
+	char ch;
+
+	printf("입력 : ");
+
+	scanf_s(" %c", &ch, sizeof(ch));
+	while (getchar() != '\n');
+
+	if ('0' + n <= ch && ch <= '0' + m) {
+		return ch - '0';
+	}
+
+	printf("잘못된 입력입니다. 다시 입력해 주세요\n");
+	printf("pause");
+
+	return get_only_n2m_number_1(n , m);
 }
