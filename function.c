@@ -138,7 +138,7 @@ void make_floor(Building* building_p) {
 		if (size <= 0 || size > 4) {
 			printf("잘못된 입력입니다.\n");
 			i--;
-			return;
+			continue;
 		}
 
 		(*building_p)[i] = (Floor)malloc(sizeof(Room) * size);
