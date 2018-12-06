@@ -1,4 +1,5 @@
 #include "function.h"
+#include "cursor_control.h"
 
 //printf_menu
 int show_menu() {
@@ -14,7 +15,7 @@ int show_menu() {
 void init_room(Building* building_p) {
 
 	int size;
-	int i, j, k;
+	int i, j, k, l;
 	int room, floor;
 
 	if (!(*building_p)) return;
@@ -22,11 +23,10 @@ void init_room(Building* building_p) {
 	if (***building_p) return;
 
 	floor = _msize(*building_p) / sizeof(Floor);
-	room = _msize(**building_p) / sizeof(Room);
 
 	for (i = 0; i < floor; i++) {
 		printf("[%d층]\n", i + 1);
-
+		room = _msize(*(*building_p + i)) / sizeof(Room);
 		for (j = 0; j < room; j++) {
 			printf("%d0%d호에는 몇명의 거주자가 있나요? : ", i + 1, j + 1);
 			scanf_s("%d", &size);
@@ -38,10 +38,13 @@ void init_room(Building* building_p) {
 			}
 			*(*(*building_p + i) + j) = (Room)malloc(sizeof(Person) * size);
 			for (k = 0; k < size; k++) {
-
-				strcpy((*(*(*building_p + i) + j) + k)->name, "");
+				for (l = 0; l < 10; l++) {
+					(*(*(*building_p + i) + j) + k)->name[l] = '\0';
+				}
 				(*(*(*building_p + i) + j) + k)->age = 0;
-				strcpy((*(*(*building_p + i) + j) + k)->phone_number, "");
+				for (l = 0; l < 20; l++) {
+					(*(*(*building_p + i) + j) + k)->phone_number[l] = '\0';
+				}
 			}
 		}
 	}
@@ -59,13 +62,12 @@ void asign_room(Building* building_p) {
 	if ((***building_p)->name[0] != 0) return;
 
 	floor = _msize(*building_p) / sizeof(Floor);
-	room = _msize(**building_p) / sizeof(Room);
-	person = _msize(***building_p) / sizeof(Person);
-
 
 	for (i = 0; i < floor; i++) {
 		printf("[%d층]\n", i + 1);
+		room = _msize(*(*building_p + i)) / sizeof(Room);
 		for (j = 0; j < room; j++) {
+			person = _msize(*(*(*building_p + i) + j)) / sizeof(Person);
 			printf("%3d호 정보 입력\n", j + 100 * (i + 1) + 1);
 			for (k = 0; k < person; k++) {
 				printf("%d번 거주자의 이름 : ", k + 1);
@@ -100,12 +102,12 @@ void print_room(Building building) {
 	if ((***building).name[0] == 0) return;
 
 	floor = _msize(building) / sizeof(Floor);
-	room = _msize(*building) / sizeof(Room);
-	person = _msize(**building) / sizeof(Person);
-
+	
 	for (i = 0; i < floor; i++) {
+		room = _msize(building[i]) / sizeof(Room);
 		printf("[%d층]\n", i + 1);
 		for (j = 0; j < room; j++) {
+			person = _msize(building[i][j]) / sizeof(Person);
 			printf("[%3d호]\n", j + 100 * (i + 1) + 1);
 			for (k = 0; k < person; k++) {
 				printf("%d번 거주자의 이름 : %s\n", i + 1, building[i][j][k].name);
@@ -159,6 +161,7 @@ void delete_floor(Floor floor) {
 
 	for (i = 0; i < room; i++) {
 		delete_room(floor[i]);
+		printf("Delete Room[%d]\n", i + 1);
 	}
 	free(floor);
 }
@@ -200,8 +203,11 @@ void delete_building(Building building) {
 
 	for (i = 0; i < floor; i++) {
 		delete_floor(building[i]);
+		printf("Delete floor[%d]\n", i + 1);
 	}
+
 	free(building);
+	printf("Delete building\n");
 }
 
 void print_building(Building building) {

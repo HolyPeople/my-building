@@ -23,3 +23,4 @@ extern void init_building(Building*); //make building and dynamic alloc Person 3
 extern void delete_building(Building); ////return building_memory
 extern void remodeling_building(Building*);
 void print_building(Building);
+int get_only_n2m_number_1(int, int);
